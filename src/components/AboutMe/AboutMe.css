@@ -2,7 +2,7 @@
   width: 100%;
   max-width: calc(1280px - 70px * 2);
   box-sizing: border-box;
-  margin: 110px auto;
+  margin: 110px auto 0;
 }
 
 .about-me__title {  
@@ -52,6 +52,7 @@
 
 .about-me__photo {
   max-width: 270px;
+  max-height: 327px;
   border-radius: 10px;
 }
 
@@ -68,4 +69,37 @@
 
 .about-me__link:hover {
   opacity: .7;
+}
+
+@media screen and (max-width: 1023px) {
+  .about-me {
+    max-width: calc(768px - 50px * 2);
+    margin: 90px auto 0;
+  }
+
+  .about-me__name {
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 16px;
+  }
+
+  .about-me__role {
+    margin-bottom: 20px;
+  }
+
+  .about-me__photo {
+    max-width: 255px;
+    max-height: 307px;
+  }
+
+  .about-me__brief {
+    font-size: 12px;
+    line-height: 18px;
+    max-width: 364px;
+    margin-bottom: 87px;
+  }
+  
+  .about-me__description {
+    margin-bottom: 90px;
+  }
 }

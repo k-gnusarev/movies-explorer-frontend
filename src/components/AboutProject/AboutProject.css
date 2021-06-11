@@ -81,3 +81,22 @@
   font-weight: 400;
   line-height: 20px;
 }
+
+@media screen and (max-width: 1023px) {
+  .about-project {
+    max-width: calc(768px - 50px * 2);
+    margin: 90px auto;
+  }
+
+  .about-project__diagram  {
+    margin: 70px auto 0;
+  }
+  
+  .about-project__description_text_frontend {
+    margin-top: 5px;
+  }
+
+  .about-project__description_text_backend {
+    margin-top: 5px;
+  }
+}

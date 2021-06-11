@@ -20,3 +20,16 @@
   line-height: 58px;
   max-width: 730px;
 }
+
+@media screen and (max-width: 1023px) {
+  .promo {
+    margin: 0 20px;
+  }
+
+  .promo__title {
+    margin: 350px auto;
+    font-size: 40px;
+    line-height: 52px;
+    max-width: 680px;
+  }
+}
