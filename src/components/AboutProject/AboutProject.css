@@ -1,7 +1,7 @@
 .about-project {
-  max-width: 1280px;
+  max-width: calc(1280px - 70px * 2);
   box-sizing: border-box;
-  margin: 110px 70px;
+  margin: 110px auto;
 }
 
 .about-project__title {

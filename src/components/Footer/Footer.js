@@ -11,17 +11,17 @@ export default function Footer(props) {
         <nav className='footer__nav'>
           <ul className='footer__list'>
             <li className='footer__item'>
-              <a href='#' target='_blank' rel='noreferrer' className='footer__link'>
+              <a href='https://praktikum.yandex.ru/' target='_blank' rel='noreferrer' className='footer__link'>
                 Яндекс.Практикум
               </a>
             </li>
             <li className='footer__item'>
-              <a href='#' target='_blank' rel='noreferrer' className='footer__link'>
+              <a href='https://github.com/k-gnusarev/' target='_blank' rel='noreferrer' className='footer__link'>
                 GitHub
               </a>
             </li>
             <li className='footer__item'>
-              <a href='#' target='_blank' rel='noreferrer' className='footer__link'>
+              <a href='https://www.linkedin.com/mwlite/in/konstantin-gnusarev-555153133' target='_blank' rel='noreferrer' className='footer__link'>
                 LinkedIn
               </a>
             </li>

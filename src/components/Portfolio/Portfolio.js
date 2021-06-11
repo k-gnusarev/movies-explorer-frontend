@@ -8,7 +8,7 @@ export default function Portfolio(props) {
       <ul className='portfolio__list'>
         <li className='portfolio__item'>
           <a
-            href='#'
+            href='https://github.com/k-gnusarev/how-to-learn'
             target='_blank'
             rel='noreferrer'
             className='portfolio__link'>
@@ -18,7 +18,7 @@ export default function Portfolio(props) {
         </li>
         <li className='portfolio__item'>
           <a
-            href='#'
+            href='https://github.com/k-gnusarev/russian-travel'
             target='_blank'
             rel='noreferrer'
             className='portfolio__link'>
@@ -28,7 +28,7 @@ export default function Portfolio(props) {
         </li>
         <li className='portfolio__item'>
           <a
-            href='#'
+            href='https://github.com/k-gnusarev/react-mesto-api-full'
             target='_blank'
             rel='noreferrer'
             className='portfolio__link'>

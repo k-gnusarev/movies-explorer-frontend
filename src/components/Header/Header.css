@@ -1,16 +1,17 @@
-.header_bg-color_dark {
+.header {
   background-color: #fff;
+  max-width: 1280px;
+  margin: auto;
 }
 
 .header__container {
+  height: 74px;
+  margin: auto;
   display: flex;
+
   align-items: center;
   justify-content: space-between;
-  box-sizing: border-box;
-  max-width: 1280px;
-  height: 74px;
-  padding: 0 70px;
-  margin: auto;
+  margin: 0 70px;
 }
 
 .header__logo {

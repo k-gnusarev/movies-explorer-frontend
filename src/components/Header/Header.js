@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export default function Header(props) {
   return (
-    <header className={`header header_bg-color_dark`}>
+    <header className='header'>
       <div className='header__container'>
         <Link><img className='header__logo' src={logo} alt='Логотип проекта'></img></Link>
         <Navigation />
