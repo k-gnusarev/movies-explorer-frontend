@@ -33,3 +33,16 @@
     max-width: 680px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .promo {
+    margin: 0 14px;
+  }
+
+  .promo__title {
+    margin: 220px auto;
+    font-size: 29px;
+    line-height: 37px;
+    max-width: 680px;
+  }
+}

@@ -10,6 +10,7 @@ export default function Techs(props) {
       <ul className='techs__list'>
         <li className='techs__list-item'>HTML</li>
         <li className='techs__list-item'>CSS</li>
+        <li className='techs__list-item'>JS</li>
         <li className='techs__list-item'>React</li>
         <li className='techs__list-item'>Git</li>
         <li className='techs__list-item'>Express</li>

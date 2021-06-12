@@ -73,3 +73,20 @@
     font-size: 28px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .portfolio {
+    width: calc(100% - 14px * 2);
+    margin-bottom: 70px;
+  }
+  
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 28px;    
+  }
+
+  .portfolio__arrow {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}

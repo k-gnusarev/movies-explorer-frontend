@@ -8,11 +8,11 @@
   text-decoration: none;
   font-size: 12px;
   line-height: 16px;
+  padding: 8px 20px;
 }
 
 .navigation__link_type_signup {
   color: #000;
-  padding: 8px 20px;
   transition: opacity .5s;
 }
 
@@ -23,11 +23,17 @@
 .navigation__link_type_signin {
   color: #fff;
   background-color: #000;
-  padding: 8px 20px;
   border-radius: 3px;
   transition: opacity .5s;
 }
 
 .navigation__link_type_signin:hover {
   opacity: .7;
+}
+
+@media screen and (max-width: 767px) {
+  .navigation__link {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
 }

@@ -100,3 +100,33 @@
     margin-top: 5px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .about-project {
+    max-width: calc(320px - 18px * 2);
+    margin: 70px auto;
+  }
+
+  .about-project__text-section {
+    flex-direction: column;
+    gap: 56px;
+    margin: 60px auto;
+  }
+
+  .about-project__diagram  {
+    margin: 70px auto 0;
+  }
+  
+  .about-project__description_text_frontend {
+    margin-top: 5px;
+  }
+
+  .about-project__description_text_backend {
+    margin-top: 5px;
+  }
+
+  .about-project__diagram-text {  
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

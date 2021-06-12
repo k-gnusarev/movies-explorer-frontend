@@ -23,3 +23,9 @@
     margin: 0 20px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .header__container {
+    margin: 0 14px;
+  }
+}
