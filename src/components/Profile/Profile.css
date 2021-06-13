@@ -88,7 +88,7 @@
 @media screen and (max-width: 767px) {
   .profile {
     max-width: 260px;
-    paddhhhing: 70px 30px 40px;
+    padding: 70px 30px 40px;
   }
 
   .profile__greeting {
