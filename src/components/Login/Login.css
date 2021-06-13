@@ -1,7 +1,6 @@
 /* TODO: адаптивная центровка по центру экрана */
 
 .login {
-  max-width: 400px;
   height: 100vh;
   margin: auto;
   display: flex;
@@ -9,6 +8,8 @@
 }
 
 .login__container {
+  width: 100%;
+  max-width: 400px;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -108,6 +109,8 @@
     margin-top: 56px;
     margin-bottom: 30px;
     align-items: center;
+    box-sizing: border-box;
+    padding: 0 30px;
   }
 
   .login__logo {
