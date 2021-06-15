@@ -45,6 +45,10 @@
   background-image: url('../../images/saved-icon.svg');
 }
 
+.card__save-button_delete {
+  background-image: url('../../images/delete-icon.svg');
+}
+
 .card__photo {
   max-height: 190px;
   object-fit: cover;
