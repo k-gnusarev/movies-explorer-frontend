@@ -8,8 +8,8 @@ export default function Header(props) {
   return (
     <header className='header'>
       <div className='header__container'>
-        <Link><img className='header__logo' src={logo} alt='Логотип проекта'></img></Link>
-        <Navigation />
+        <Link to='/'><img className='header__logo' src={logo} alt='Логотип проекта'></img></Link>
+        <Navigation loggedIn={props.loggedIn} />
       </div>
     </header>
   )
