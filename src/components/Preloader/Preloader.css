@@ -40,7 +40,8 @@
 }
 
 .preloader {
-    display: none;
+    /* поменять на display: none, чтобы убрать */
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;

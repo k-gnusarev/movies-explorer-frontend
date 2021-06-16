@@ -15,7 +15,7 @@ export default function Login(props) {
           <input type='email' className='login__input' />
           <span className='login__error-label'>Текст ошибки</span>
           <label className='login__label'>Пароль</label>
-          <input type='password' className='login__input' />
+          <input type='password' minLength='8' className='login__input' />
           <span className='login__error-label'>Текст ошибки</span>
           <button className='login__button'>Войти</button>
         </form>

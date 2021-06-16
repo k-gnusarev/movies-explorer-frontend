@@ -56,6 +56,10 @@
   outline: none;
 }
 
+.profile__input:invalid {
+  color: #ff4062;
+}
+
 .profile__button {
   background: #fff;
   border: none;

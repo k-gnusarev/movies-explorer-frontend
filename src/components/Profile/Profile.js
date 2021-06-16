@@ -11,9 +11,9 @@ export default function Profile(props) {
           Имя 
           <input id='name' className='profile__input'></input>
         </label>
-        <label htmlFor='name' className='profile__form-label'>
+        <label htmlFor='email' className='profile__form-label'>
           Почта 
-          <input id='name' className='profile__input'></input>
+          <input id='email' type='email' className='profile__input'></input>
         </label>      
         <button className='profile__button profile__button_type_submit' type='submit'>Редактировать</button>
         <button className='profile__button profile__button_type_logout' type='button'>Выйти из аккаунта</button>

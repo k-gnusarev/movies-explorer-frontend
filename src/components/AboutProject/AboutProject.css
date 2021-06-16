@@ -1,5 +1,7 @@
 .about-project {
-  max-width: calc(1280px - 70px * 2);
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 70px;
   box-sizing: border-box;
   margin: 110px auto;
 }
@@ -84,7 +86,7 @@
 
 @media screen and (max-width: 1023px) {
   .about-project {
-    max-width: calc(768px - 50px * 2);
+    padding: 0 50px;
     margin: 90px auto;
   }
 
@@ -103,7 +105,7 @@
 
 @media screen and (max-width: 767px) {
   .about-project {
-    max-width: calc(320px - 18px * 2);
+    padding: 0 18px;
     margin: 70px auto;
   }
 

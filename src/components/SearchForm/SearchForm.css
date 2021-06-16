@@ -55,6 +55,13 @@
   letter-spacing: 0px;
   text-align: center;
   margin-left: 21px;
+
+  transition: opacity .3s;
+}
+
+.search__button:hover {
+  opacity: .8;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1023px) {

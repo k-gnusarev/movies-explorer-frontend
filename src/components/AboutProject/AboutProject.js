@@ -1,8 +1,7 @@
 import React from 'react';
 import './AboutProject.css';
 
-
-export default function AboutProject(props) {
+export default function AboutProject() {
   return (
     <section className='about-project'>
       <h2 id='project' className='about-project__title'>О проекте</h2>
@@ -23,5 +22,5 @@ export default function AboutProject(props) {
         <p className="about-project__diagram-text about-project__description_text_frontend">Front-end</p>
       </div>
     </section>
-  )
-};
+  );
+}

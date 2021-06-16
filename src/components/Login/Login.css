@@ -81,6 +81,13 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 17px;
+
+  transition: opacity .3s;
+}
+
+.login__button:hover {
+  cursor: pointer;
+  opacity: .8;
 }
 
 .login__text {

@@ -18,7 +18,7 @@ export default function Register(props) {
           <input type='email' className='register__input' />
           <span className='register__error-label'>Текст ошибки</span>
           <label className='register__label'>Пароль</label>
-          <input type='password' className='register__input' />
+          <input type='password' minLength='8' className='register__input' />
           <span className='register__error-label'>Текст ошибки</span>
           <button className='register__button'>Зарегистрироваться</button>
         </form>

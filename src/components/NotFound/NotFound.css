@@ -42,8 +42,14 @@
 
   position: absolute;
   bottom: 60px;
+
+  transition: opacity .3s;
 }
 
+.not-found__link:hover {
+  opacity: .8;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 767px) {
   .not-found__title {

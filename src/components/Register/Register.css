@@ -1,5 +1,3 @@
-/* TODO: адаптивная центровка по центру экрана */
-
 .register {
   height: 100vh;
   margin: auto;
@@ -86,6 +84,13 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 17px;
+
+  transition: opacity .3s;
+}
+
+.register__button:hover {
+  cursor: pointer;
+  opacity: .8;
 }
 
 .register__text {
