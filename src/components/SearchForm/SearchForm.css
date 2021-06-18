@@ -40,6 +40,14 @@
   text-align: center;
 }
 
+.search__input::placeholder {
+  transition: opacity .3s;
+}
+
+.search__input:focus::placeholder {
+  opacity: .7;
+}
+
 .search__button {
   color: #fff;
   background: #000;

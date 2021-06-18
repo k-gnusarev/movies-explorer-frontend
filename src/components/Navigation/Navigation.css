@@ -173,8 +173,10 @@
 
 @media screen and (max-width: 767px) {
   .navigation__link {
-    font-size: 10px;
+    font-size: 18px;
+    line-height: 22px;
     padding: 5px 12px;
+    margin-top: 10px;
   }
 
   .navigation__burger-menu-container {

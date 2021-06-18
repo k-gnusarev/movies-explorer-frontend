@@ -9,7 +9,7 @@ export default function SearchForm(props) {
     <section className='search'>
       <form className='search__form'>
         <img className='search__icon' src={search__icon} />
-        <input placeholder='Фильм' className='search__input' />
+        <input placeholder='Фильм' className='search__input' required='true' />
         <button type='submit' className='search__button'>Найти</button>
       </form>
       <FilterCheckbox />
