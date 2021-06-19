@@ -1,0 +1,68 @@
+.card {
+  width: 100%;
+  max-width: 364px;
+
+  box-shadow: 0px 4px 30px 0px #00000014;
+
+}
+
+.card__title {
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  margin: 0;
+  margin-bottom: 9px;
+  padding: 0;
+
+}
+
+.card__duration {
+  margin: 0;
+  padding: 0;
+  font-size: 11px;
+  line-height: 13px;
+  color: #a0a0a0;
+}
+
+.card__title-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+}
+
+.card__save-button {
+  width: 30px;
+  height: 30px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  background-image: url('../../images/not-saved-icon.svg');
+  transition: opacity .3s;
+}
+
+.card__save-button:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+.card__save-button_saved {
+  background-image: url('../../images/saved-icon.svg');
+}
+
+.card__save-button_delete {
+  background-image: url('../../images/delete-icon.svg');
+}
+
+.card__photo {
+  max-height: 190px;
+  object-fit: cover;
+  width: 100%;
+}
+
+@media screen and (max-width: 1023px) {
+  .card {
+    max-width: 339px;
+  }
+}

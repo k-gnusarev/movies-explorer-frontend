@@ -1,0 +1,63 @@
+/* TODO: устранить гориз. прокрутку на мобилке */
+
+.card-list {
+  max-width: 1280px;
+  width: 100%;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 0 70px;
+}
+
+.card-list__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 364px);
+  row-gap: 30px;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: auto;
+}
+
+.card-list__more-button {
+  padding: 0;
+  margin-top: 50px;
+  width: 100%;
+  height: 36px;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  background: #f9f9f9;
+  transition: opacity .5s;
+}
+
+.card-list__more-button:hover {
+  cursor: pointer;
+  opacity: .8;
+}
+
+@media screen and (max-width: 1023px) {
+  .card-list {
+    padding: 0 30px;
+  }
+
+  .card-list__list {
+    grid-template-columns: repeat(auto-fill, 339px);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .card-list {
+    padding: 0 10px;
+  }
+
+  .card-list__list {
+    grid-template-columns: repeat(auto-fill, 300px);
+    grid-row-gap: 16px;
+  }
+}
+
