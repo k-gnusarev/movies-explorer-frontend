@@ -1,25 +1,58 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import './MoviesCard.css';
-import movie__preview from '../../images/movie-preview.jpg';
 import { useLocation } from 'react-router-dom';
 
-export default function MoviesCard(props) {
+export default function MoviesCard({
+  movie,
+  checkSaved
+}) {
+  const { nameEN, duration, image, trailer } = movie;
+
+  const isSaved = checkSaved(movie);
   const routeLocation = useLocation().pathname;
-  const [isSaved, setIsSaved] = React.useState(true);
+
+  const parseDuration = duration => {
+    const hours = Math.floor(duration / 60)
+    const minutes = duration % 60;
+
+    return `${hours > 0 ? hours + 'ч ': ''}${minutes}м`
+  }
+
+  function handleSaveClick() {
+    onSaveClick(movie, isSaved)
+  }
+
+  function getImageUrl(imageLink) {
+    return `https://api.nomoreparties.co${imageLink}`
+  }
 
   // определяем по маршруту, какую иконку прорисовывать
   const deleteIcon = ( routeLocation === '/saved-movies' ? 'card__save-button_delete' : 'card__save-button_saved' );
 
   return (
-    <div className='card'>
+    <li className='card'>
       <div className='card__title-section'>
         <div className='card__text-section'>
-          <h2 className='card__title'>33 слова о дизайне</h2>
-          <p className='card__duration'>1ч 47м</p>
+          <h2 className='card__title'>{nameEN}</h2>
+          <p className='card__duration'>{parseDuration(duration)}</p>
         </div>
-        <button onClick={() => setIsSaved(!isSaved)} className={`card__save-button ${ isSaved ? deleteIcon : '' }` } />
+        <button
+          onClick={handleSaveClick}
+          className={`card__save-button ${ isSaved ? deleteIcon : '' }` }
+        />
       </div>
-      <img alt='Постер к карточке' src={movie__preview} className='card__photo' />
-    </div>
+      <a
+        href={trailer}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <img
+          alt={nameEN}
+          src={getImageUrl(image.url)}
+          className='card__photo'
+        />
+      </a>
+    </li>
   )
 };

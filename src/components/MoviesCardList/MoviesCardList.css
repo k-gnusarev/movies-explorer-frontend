@@ -1,11 +1,16 @@
 /* TODO: устранить гориз. прокрутку на мобилке */
 
 .card-list {
+  visibility: hidden;
   max-width: 1280px;
   width: 100%;
   margin: auto;
   box-sizing: border-box;
   padding: 0 70px;
+}
+
+.card-list_shown {
+  visibility: visible;
 }
 
 .card-list__list {

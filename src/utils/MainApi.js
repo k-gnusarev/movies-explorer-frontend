@@ -135,7 +135,8 @@ class MainApi {
 const mainApi = new MainApi({
   baseUrl: 'https://api.kgnusaryov-project.nomoredomains.icu',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiM2FlMDRiMWQ3MjQ3NmExZTRjMjkiLCJpYXQiOjE2MjQ3MTUyNjgsImV4cCI6MTYyNTMyMDA2OH0.aGJfQ-ABxi9zsTkR2GEZhsIizq4mr4ZW0jGbQVcxKHk'
   }
 });
 
