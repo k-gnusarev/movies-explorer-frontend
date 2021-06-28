@@ -5,13 +5,17 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { useLocation } from 'react-router-dom';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 export default function Movies({
   checkSaved,
   onSearch,
   movies,
   isPreloaderShown,
-  inputMessage
+  inputMessage,
+  onSaveClick,
+  isLoggedIn
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [renderedMovies, setRenderedMovies] = useState([]);
@@ -49,6 +53,7 @@ export default function Movies({
 
   return (
     <>
+      <Header isLoggedIn={isLoggedIn} />
       <SearchForm
         onSubmit={handleSearchSubmit}
         isShort={isShort}
@@ -63,7 +68,9 @@ export default function Movies({
         setRenderedMovies={setRenderedMovies}
         checkSaved={checkSaved}
         inputMessage={inputMessage}
+        onSaveClick={onSaveClick}
       />
+      <Footer />
     </>
   )
 };

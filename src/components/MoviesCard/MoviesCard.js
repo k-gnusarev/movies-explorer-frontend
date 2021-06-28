@@ -5,11 +5,10 @@ import { useLocation } from 'react-router-dom';
 
 export default function MoviesCard({
   movie,
-  checkSaved
+  onSaveClick
 }) {
-  const { nameEN, duration, image, trailer } = movie;
+  const { nameEN, duration, image, trailerLink } = movie;
 
-  const isSaved = checkSaved(movie);
   const routeLocation = useLocation().pathname;
 
   const parseDuration = duration => {
@@ -20,8 +19,12 @@ export default function MoviesCard({
   }
 
   function handleSaveClick() {
-    onSaveClick(movie, isSaved)
+    onSaveClick(movie)
   }
+
+  useEffect(() => {
+    console.log(movie);
+  })
 
   function getImageUrl(imageLink) {
     return `https://api.nomoreparties.co${imageLink}`
@@ -39,13 +42,13 @@ export default function MoviesCard({
         </div>
         <button
           onClick={handleSaveClick}
-          className={`card__save-button ${ isSaved ? deleteIcon : '' }` }
+          className={`card__save-button ${ movie.isSaved ? deleteIcon : '' }` }
         />
       </div>
       <a
-        href={trailer}
+        href={trailerLink}
         target='_blank'
-        rel='noopener noreferrer'
+        rel='noreferrer'
       >
         <img
           alt={nameEN}

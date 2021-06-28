@@ -1,23 +1,84 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useContext, useEffect, useState } from 'react';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import { validateForm } from '../../utils/formValidator';
+import Header from '../Header/Header';
 import './Profile.css';
 
-export default function Profile(props) {
+
+export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
+  const [isSubmitButtonActive, setIsSubmitButtonActive] = useState(false);
+  const [isInputDisabled, setIsInputDisabled] = useState(true);
+
+  const currentUser = useContext(CurrentUserContext);
+  const { values, errors, isValid, handleChange, setValues } = validateForm();
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onProfileUpdate(values.email, values.name)
+  }
+
+  useEffect(() => {
+    setValues(currentUser)
+  }, [currentUser, setValues])
+
   return (
-    <section className='profile'>
-      {/* Имя будет вытаскиваться из контекста */}
-      <h1 className='profile__greeting'>Привет, Константин</h1>
-      <form className='profile__form'>
-        <label htmlFor='name' className='profile__form-label'>
-          Имя 
-          <input id='name' className='profile__input'></input>
-        </label>
-        <label htmlFor='email' className='profile__form-label'>
-          Почта 
-          <input id='email' type='email' className='profile__input'></input>
-        </label>      
-        <button className='profile__button profile__button_type_submit' type='submit'>Редактировать</button>
-        <button className='profile__button profile__button_type_logout' type='button'>Выйти из аккаунта</button>
-      </form>
-    </section>
+    <>
+      <Header isLoggedIn={isLoggedIn} />
+      <section className='profile'>
+        <h1 className='profile__greeting'>Привет, {currentUser.name}</h1>
+        <form
+          className='profile__form'
+          onSubmit={handleSubmit}
+          noValidate={true}
+        >
+          <label htmlFor='name' className='profile__form-label'>
+            Имя 
+            <input
+              id='name'
+              className='profile__input'
+              type='text'
+              minLength='2'
+              maxLength='30'
+              name='name'
+              required={true}
+              value={values.name || ''}
+              onChange={handleChange}
+              disabled={false}
+            ></input>
+          </label>
+          {errors.name && <span
+              className='profile__error-label'
+            >{errors.name}</span>}
+          <label htmlFor='email' className='profile__form-label'>
+            Почта 
+            <input
+              type='email'
+              className='profile__input'
+              id='email'
+              name='email'
+              required={true}
+              value={values.email || ''}
+              onChange={handleChange}
+              disabled={false}
+            />
+          </label>
+          {errors.email && <span
+              className='profile__error-label'
+            >{errors.email}</span>}
+          <button
+            className='profile__button profile__button_type_submit'
+            type='submit'
+          >
+            Редактировать
+          </button>
+          <button
+            className='profile__button profile__button_type_logout'
+            type='button'
+            onClick={onLogout}
+          >Выйти из аккаунта</button>
+        </form>
+      </section>
+    </>
   )
 };

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './Navigation.css';
 import account__icon from '../../images/profile-icon.svg';
 
-export default function Navigation({ loggedIn }) {
+export default function Navigation({ isLoggedIn }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   function toggleBurgerMenu() {
@@ -13,7 +13,7 @@ export default function Navigation({ loggedIn }) {
 
   return (
     <div className='navigation__container'>
-      <div className={`navigation__movies-block ${loggedIn ? '' : 'no-display'}`}>
+      <div className={`navigation__movies-block ${isLoggedIn ? '' : 'no-display'}`}>
         <Link className='navigation__link navigation__link_type_movies' to='/movies'>Фильмы</Link>
         <Link className='navigation__link navigation__link_type_movies' to='/saved-movies'>Сохранённые фильмы</Link>
         <Link className='navigation__link navigation__link_type_account' to='/profile'>
@@ -21,7 +21,7 @@ export default function Navigation({ loggedIn }) {
           <img alt='Редактировать аккаунт' className='navigation__account-icon' src={account__icon} />
         </Link>
       </div>
-      <div className={`navigation__login-block ${loggedIn ? 'no-display' : ''}`}>
+      <div className={`navigation__login-block ${isLoggedIn ? 'no-display' : ''}`}>
         <Link className='navigation__link navigation__link_type_signup' to='/signup'>
           Регистрация
         </Link>
@@ -29,7 +29,7 @@ export default function Navigation({ loggedIn }) {
           Войти
         </Link>
       </div>
-      <button className={`navigation__burger-button ${loggedIn ? '' : 'no-display'}`} onClick={ toggleBurgerMenu } />
+      <button className={`navigation__burger-button ${isLoggedIn ? '' : 'no-display'}`} onClick={ toggleBurgerMenu } />
       <div className={`navigation__burger-menu ${isMenuOpen ? 'visible' : ''}`}>
         <button className='navigation__burger-button navigation__burger-button_type_close' onClick={ toggleBurgerMenu } />
         <div className={`navigation__burger-menu-container ${isMenuOpen ? 'visible' : ''}`}>

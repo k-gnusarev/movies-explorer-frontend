@@ -60,6 +60,16 @@
   color: #ff4062;
 }
 
+.profile__error-label {
+  font-size: 10px;
+  line-height: 12px;
+  color: #ff4062
+}
+
+.profile__error-label:first-of-type {
+  margin-bottom: 10px;
+}
+
 .profile__button {
   background: #fff;
   border: none;

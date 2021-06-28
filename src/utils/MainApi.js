@@ -1,3 +1,5 @@
+import { BASE_URL } from "./constants";
+
 class MainApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -30,6 +32,7 @@ class MainApi {
   // GET /movies
 
   getMovies() {
+
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._headers,
     })
@@ -48,7 +51,7 @@ class MainApi {
 
   // PATCH /users/me — обновляет профиль
 
-  updateUserInfo() {
+  updateUserInfo(email, name) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       method: 'PATCH',
@@ -110,6 +113,7 @@ class MainApi {
   // получение ответа на запрос с сервера
 
   _getResponseData(res) {
+
     if (res.ok) {
       return res.json();
     }
@@ -133,10 +137,10 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'https://api.kgnusaryov-project.nomoredomains.icu',
+  baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiM2FlMDRiMWQ3MjQ3NmExZTRjMjkiLCJpYXQiOjE2MjQ3MTUyNjgsImV4cCI6MTYyNTMyMDA2OH0.aGJfQ-ABxi9zsTkR2GEZhsIizq4mr4ZW0jGbQVcxKHk'
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
   }
 });
 

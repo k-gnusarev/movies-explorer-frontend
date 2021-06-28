@@ -90,6 +90,12 @@
   opacity: .8;
 }
 
+
+.login__button:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
 .login__text {
   margin: 0;
   padding: 0;

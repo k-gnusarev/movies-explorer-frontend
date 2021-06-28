@@ -6,14 +6,10 @@ import { useLocation } from 'react-router-dom';
 
 export default function MoviesCardList({
   movies,
-  renderedMovies,
-  setRenderedMovies,
   checkSaved,
-  inputMessage
+  onSaveClick
 }) {
-  //const [renderedMovies, setRenderedMovies] = useState([]);
   const isCardListShown = movies.length > 0;
-  const { pathname } = useLocation();
 
   return (
     <div className={`card-list ${ isCardListShown ? 'card-list_shown' : '' }`}>
@@ -24,6 +20,7 @@ export default function MoviesCardList({
               key={movie.movieId || movie.id}
               movie={movie}
               checkSaved={checkSaved}
+              onSaveClick={onSaveClick}
             />
           }))
         }
