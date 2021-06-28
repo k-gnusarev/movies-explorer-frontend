@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -19,13 +19,15 @@ import { getContent } from '../../utils/auth';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
-  const history = useHistory();
   const [currentUser, setCurrentUser] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [movies, setMovies] = useState([]);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const history = useHistory();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     // Проверка валидности токена
@@ -40,11 +42,12 @@ function App() {
               email: res.email
             });
             setIsLoggedIn(true);
+            history.push(pathname);
           }
         })
         .catch(err => console.error(utils.errorMessageHandler(err)))
     }
-  }, [])
+  }, [history])
 
   useEffect(() => {
     /* 
@@ -52,16 +55,15 @@ function App() {
      * пользователя с сервера
      */
     if (isLoggedIn) {
-      mainApi
-        .getUserInfo()
-        .then(res => {
-          if (res) {
-            setCurrentUser(res.data)
-          }
+      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
+        .then(([userInfo, savedMovieList]) => {
+          setCurrentUser(userInfo);
+          setSavedMovies(savedMovieList);
+          localStorage.setItem('savedMovies', JSON.stringify(savedMovieList));
         })
         .catch(err => console.error(utils.errorMessageHandler(err)))
     }
-  }, [])
+  }, [isLoggedIn])
 
   function handleProfileUpdate(email, name) {
     mainApi
@@ -226,6 +228,7 @@ function App() {
             path='/saved-movies'
             component={SavedMovies}
             isLoggedIn={isLoggedIn}
+            savedMovies={savedMovies}
           ></ProtectedRoute>)}
           {isLoggedIn && (<ProtectedRoute
             path='/profile'

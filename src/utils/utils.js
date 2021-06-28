@@ -16,3 +16,41 @@ export const errorMessageHandler = err => {
     default: return 'Что-то пошло не так...'
   }
 }
+
+export const getToken = () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    return token;
+  }
+  return
+}
+
+export const getWindowWidth = () => window.innerWidth;
+
+export const getCardsCount = () => {
+  const width = getWindowWidth();
+
+  switch (true) {
+    case (width < 720):
+      return 5;
+    case (width < 920):
+      return 8;
+    case (width < 1279):
+      return 12;
+    default: return 12
+  }
+}
+
+export const addMoreCards = () => {
+  const width = getWindowWidth();
+
+  switch (true) {
+    case (width < 720):
+      return 2;
+    case (width < 920):
+      return 2;
+    case (width < 1279):
+      return 3;
+    default: return 4
+  }
+}
