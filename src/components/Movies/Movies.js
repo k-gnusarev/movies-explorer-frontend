@@ -4,9 +4,9 @@ import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import * as utils from '../../utils/utils';
 
 export default function Movies({
   checkSaved,
@@ -15,15 +15,16 @@ export default function Movies({
   isPreloaderShown,
   inputMessage,
   onSaveClick,
-  isLoggedIn
+  isLoggedIn,
+  searchError,
+  addMovie,
+  removeMovie,
+  savedMovies
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [renderedMovies, setRenderedMovies] = useState([]);
   const [isShort, setIsShort] = useState(false);
   const [allMovies, setAllMovies] = useState([]);
-  const [currentMovieList, setCurrentMovieList] = useState([]);
-
-  const { pathname } = useLocation();
 
   function handleShortClick() {
     setIsShort(!isShort)
@@ -36,19 +37,11 @@ export default function Movies({
     }
   }
 
-  function filterMoviesByName(movieList, value) {
-    return movieList.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()))
-  }
-
-  function filterShortMovies(movieList, isChecked) {
-    return movieList.filter(movie => isChecked ? movie.duration <= 40 : Number)
-  }
-
   useEffect(() => {
-    const moviesFilteredByName = filterMoviesByName(movies, searchQuery);
-    const shortMovies = filterShortMovies(moviesFilteredByName, isShort);
+    const moviesFilteredByName = utils.filterMoviesByName(movies, searchQuery);
+    const moviesList = utils.filterShortMovies(moviesFilteredByName, isShort);
 
-    setAllMovies(shortMovies);
+    setAllMovies(moviesList);
   }, [movies, searchQuery, isShort])
 
   return (
@@ -69,6 +62,10 @@ export default function Movies({
         checkSaved={checkSaved}
         inputMessage={inputMessage}
         onSaveClick={onSaveClick}
+        searchError={searchError}
+        addMovie={addMovie}
+        removeMovie={removeMovie}
+        savedMovies={savedMovies}
       />
       <Footer />
     </>

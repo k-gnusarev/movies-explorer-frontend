@@ -1,7 +1,8 @@
 /* TODO: устранить гориз. прокрутку на мобилке */
 
 .card-list {
-  visibility: hidden;
+  display: flex;
+  flex-direction: column;
   max-width: 1280px;
   width: 100%;
   margin: auto;
@@ -9,11 +10,9 @@
   padding: 0 70px;
 }
 
-.card-list_shown {
-  visibility: visible;
-}
-
 .card-list__list {
+  width: 100%;
+  visibility: hidden;
   list-style: none;
   padding: 0;
   display: grid;
@@ -22,6 +21,10 @@
   align-items: center;
   justify-content: space-evenly;
   margin: auto;
+}
+
+.card-list__list_shown {
+  visibility: visible;
 }
 
 .card-list__more-button {
@@ -43,6 +46,15 @@
 .card-list__more-button:hover {
   cursor: pointer;
   opacity: .8;
+}
+
+.card-list__not-found-label {
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.no-display {
+  display: none;
 }
 
 @media screen and (max-width: 1023px) {

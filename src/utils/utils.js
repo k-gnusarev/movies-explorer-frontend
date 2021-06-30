@@ -25,6 +25,8 @@ export const getToken = () => {
   return
 }
 
+export const getAbsoluteUrl = (link) => `https://api.nomoreparties.co${link}`
+
 export const getWindowWidth = () => window.innerWidth;
 
 export const getCardsCount = () => {
@@ -54,3 +56,7 @@ export const addMoreCards = () => {
     default: return 4
   }
 }
+
+export const filterMoviesByName = (movieList, value) => movieList.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()));
+
+export const filterShortMovies = (movieList, isChecked) => movieList.filter(movie => isChecked ? movie.duration <= 40 : Number)

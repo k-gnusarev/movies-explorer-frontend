@@ -8,7 +8,11 @@ import * as utils from '../../utils/utils'
 export default function MoviesCardList({
   movies,
   checkSaved,
-  onSaveClick
+  onSaveClick,
+  searchError,
+  addMovie,
+  removeMovie,
+  savedMovies,
 }) {
   const [cardCount, setCardCount] = useState(utils.getCardsCount);
   const [addedCards, setAddedCards] = useState(utils.addMoreCards);
@@ -39,20 +43,27 @@ export default function MoviesCardList({
   }, [])
 
   return (
-    <div className={`card-list ${ isCardListShown ? 'card-list_shown' : '' }`}>
-      <ul className='card-list__list'>
+    <div className='card-list'>
+      <span className={`card-list__not-found-label ${isCardListShown ? 'no-display' : ''}`}>{searchError}</span>
+      <ul className={`card-list__list ${ isCardListShown ? 'card-list__list_shown' : '' }`}>
         { isCardListShown && (
           cardsShown.map(movie => {
             return <MoviesCard
-              key={movie.movieId || movie.id}
+              key={movie._id || movie.id}
               movie={movie}
               checkSaved={checkSaved}
               onSaveClick={onSaveClick}
+              addMovie={addMovie}
+              removeMovie={removeMovie}
+              savedMovies={savedMovies}
             />
           }))
         }
       </ul>
-      <button className='card-list__more-button' onClick={handleMoreClick}>Ещё</button>
+      {movies.length > cardCount && (<button
+        className='card-list__more-button'
+        onClick={handleMoreClick}
+      >Ещё</button>)}
     </div>
   )
 };

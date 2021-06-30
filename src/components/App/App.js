@@ -25,6 +25,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [searchError, setSearchError] = useState('')
 
   const history = useHistory();
   const { pathname } = useLocation();
@@ -45,23 +46,21 @@ function App() {
             history.push(pathname);
           }
         })
-        .catch(err => console.error(utils.errorMessageHandler(err)))
+        .catch(err => console.error(err))
     }
   }, [history])
 
   useEffect(() => {
-    /* 
-     * ПРоверка состояния авторизации и получение данных
-     * пользователя с сервера
-     */
+     // ПРоверка состояния авторизации и получение фильмов с сервера
+
     if (isLoggedIn) {
-      Promise.all([mainApi.getUserInfo(), mainApi.getMovies()])
-        .then(([userInfo, savedMovieList]) => {
-          setCurrentUser(userInfo);
-          setSavedMovies(savedMovieList);
-          localStorage.setItem('savedMovies', JSON.stringify(savedMovieList));
+      mainApi
+        .getMovies()
+        .then(res => {
+          setSavedMovies(res);
+          localStorage.setItem('savedMovies', JSON.stringify(res));
         })
-        .catch(err => console.error(utils.errorMessageHandler(err)))
+        .catch(err => console.error(err))
     }
   }, [isLoggedIn])
 
@@ -69,11 +68,11 @@ function App() {
     mainApi
       .updateUserInfo(email, name)
       .then(res => {
-        if (res.ok) {
+        if (res) {
           setCurrentUser(res)
         }
       })
-      .catch(err => console.error(utils.errorMessageHandler(err)))
+      .catch(err => console.error(err))
   }
 
   function handleLogin(email, password) {
@@ -86,7 +85,7 @@ function App() {
         }
       })
       .catch(err => {
-        console.error(utils.errorMessageHandler(err))
+        console.error(err)
       })
   }
 
@@ -100,7 +99,7 @@ function App() {
         }
       })
       .catch((err) => {
-        onsole.error(utils.errorMessageHandler(err))
+        console.error(err)
       })
   }
 
@@ -112,24 +111,25 @@ function App() {
 
   function checkSavedMovies(allMovies, savedMovies) {
     savedMovies.forEach(savedMovie => {
-
       const movie = allMovies.find(movie => movie.nameRU === savedMovie.nameRU);
-      console.log('дебажим checkSavedMovies');
-      console.log('------------------------');
-      console.log('allMovies');
-      console.log(allMovies);
-      console.log('savedMovies');
-      console.log(savedMovies);
-      
-      console.log('начинается forEach');
-      console.log('savedMovie');
-      console.log(savedMovie);
-      console.log('------------------------');
-      movie.isSaved = true;
+      movie.isSaved = true
     })
 
     return allMovies
   }
+
+
+
+
+    // mainApi
+    //   .getMovies()
+    //   .then(res => {
+    //     localStorage.setItem('savedMovies', JSON.stringify(res))
+    //     setSavedMovies(res)
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   })
 
   function getMovies() {
     setInputMessage('');
@@ -138,13 +138,19 @@ function App() {
     moviesApi
       .getMovies()
       .then(res => {
-        localStorage.setItem('movies', JSON.stringify(res));
-        setMovies(checkSavedMovies(res, savedMovies));
-        setInputMessage('Ничего не найдено');
+        const moviesWithAbsoluteUrl = res.map(movie => {
+          const imageUrl = utils.getAbsoluteUrl(movie.image.url)
+          movie.image.url = imageUrl
+          return movie
+        })
+        console.log(moviesWithAbsoluteUrl);
+        localStorage.setItem('movies', JSON.stringify(moviesWithAbsoluteUrl));
+        setMovies(checkSavedMovies(moviesWithAbsoluteUrl, savedMovies));
+        setSearchError(messages.NOT_FOUND); // будет выведено, если фильмов найдено не будет
       })
       .catch(err => {
-        setInputMessage(messages.ERROR_500)
-        console.error(utils.errorMessageHandler(err));
+        setSearchError(messages.ERROR_500)
+        console.error(err);
       })
       .finally(() => {
         setIsPreloaderShown(false);
@@ -155,30 +161,27 @@ function App() {
     mainApi
       .addMovie(movie)
       .then(res => {
-        const movies = [res, ...savedMovies];
+        const movies = [res.data, ...savedMovies];
         localStorage.setItem('savedMovies', JSON.stringify(movies));
         setSavedMovies(movies);
       })
       .catch(err => {
-        console.error(utils.errorMessageHandler(err));
+        console.error(err);
       })
   }
 
   function handleRemoveMovie(movie) {
-    const movieId = movie.id || movie.movieId
-    const userMovie = savedMovies.find(savedMovie => savedMovie.movieId === movieId)
-
+    console.log(movie);
     mainApi
-      .deleteMovie(userMovie._id)
+      .deleteMovie(movie)
       .then(res => {
-        if (res.ok) {
-          const updatedSavedMovies = savedMovies.filter(deletedMovie => deletedMovie._id !== movieId)
-          setSavedMovies(updatedSavedMovies);
-          localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
-        }
+        console.log(res);
+        const updatedSavedMovies = savedMovies.filter(deletedMovie => deletedMovie._id !== res._id)
+        setSavedMovies(updatedSavedMovies);
+        localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
       })
       .catch(err => {
-        console.error(utils.errorMessageHandler(err));
+        console.error(err);
       })
   }
 
@@ -198,9 +201,8 @@ function App() {
     const allMovies = JSON.parse(localStorage.getItem('movies'));
     if (allMovies) {
       setMovies(checkSavedMovies(allMovies, savedMovies));
-      setInputMessage(messages.NOT_FOUND)
+      setSearchError(messages.NOT_FOUND)
     } else {
-      setInputMessage(messages.INPUT_QUERY);
       setMovies([]);
     }
   }, [savedMovies])
@@ -223,12 +225,24 @@ function App() {
             inputMessage={inputMessage}
             onSaveClick={handleSaveClick}
             isLoggedIn={isLoggedIn}
+            searchError={searchError}
+            savedMovies={savedMovies}
+            addMovie={handleSaveMovie}
+            removeMovie={handleRemoveMovie}
           ></ProtectedRoute>)}
           {isLoggedIn && (<ProtectedRoute
             path='/saved-movies'
             component={SavedMovies}
             isLoggedIn={isLoggedIn}
             savedMovies={savedMovies}
+            searchError={searchError}
+            addmovie={handleSaveMovie}
+            removeMovie={handleRemoveMovie}
+            onSearch={getMovies}
+            movies={movies}
+            isPreloaderShown={isPreloaderShown}
+            inputMessage={inputMessage}
+            onSaveClick={handleSaveClick}
           ></ProtectedRoute>)}
           {isLoggedIn && (<ProtectedRoute
             path='/profile'

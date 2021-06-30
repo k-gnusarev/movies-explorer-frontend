@@ -1,4 +1,5 @@
 import { BASE_URL } from "./constants";
+import * as utils from './utils';
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -18,12 +19,12 @@ class MainApi {
         duration: movie.duration,
         year: movie.year,
         description: movie.description,
-        image: `https://api.nomoreparties.co${movie.image.url}`,
+        image: movie.image.url,
         trailer: movie.trailerLink,
         movieId: movie.id.toString(),
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,
-        thumbnail: `https://api.nomoreparties.co${movie.image.url}`
+        thumbnail: movie.image.url
       })
     })
       .then( res => this._getResponseData(res) )

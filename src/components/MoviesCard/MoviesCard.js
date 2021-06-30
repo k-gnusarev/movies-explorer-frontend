@@ -1,15 +1,33 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MoviesCard.css';
-import { useLocation } from 'react-router-dom';
+import { Route, useLocation } from 'react-router-dom';
+import * as utils from '../../utils/utils'
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 export default function MoviesCard({
   movie,
-  onSaveClick
+  onSaveClick,
+  addMovie,
+  removeMovie,
+  savedMovies
 }) {
-  const { nameEN, duration, image, trailerLink } = movie;
+  const [isSaved, setIsSaved] = useState(false);
 
+  const { nameEN, duration, image, trailerLink } = movie;
   const routeLocation = useLocation().pathname;
+
+  // определяем по маршруту, какую иконку прорисовывать
+  const savedIconClass = isSaved ? 'card__save-button_saved' : '' ;
+  const deleteIconClass = ( routeLocation === '/movies' ? savedIconClass : 'card__save-button_delete' );
+
+  useEffect(() => {
+    if(savedMovies.length > 0) {
+      !isSaved
+      ? setIsSaved(savedMovies.some(savedMovie => savedMovie.movieId === movie._id && savedMovie.owner === CurrentUserContext._id))
+      : setIsSaved(false)
+    }
+  }, [])
 
   const parseDuration = duration => {
     const hours = Math.floor(duration / 60)
@@ -19,19 +37,29 @@ export default function MoviesCard({
   }
 
   function handleSaveClick() {
-    onSaveClick(movie)
+    if (!isSaved) {
+      addMovie(movie);
+      setIsSaved(true);
+    } else {
+
+      const card = savedMovies.filter(savedMovie => savedMovie.movieId === movie.id);
+
+      removeMovie(card[0]._id)
+      setIsSaved(false)
+    }
   }
 
-  useEffect(() => {
-    console.log(movie);
-  })
-
-  function getImageUrl(imageLink) {
-    return `https://api.nomoreparties.co${imageLink}`
+  function handleDeleteClick() {
+    removeMovie(movie._id)
+    setIsSaved(false)
   }
 
-  // определяем по маршруту, какую иконку прорисовывать
-  const deleteIcon = ( routeLocation === '/saved-movies' ? 'card__save-button_delete' : 'card__save-button_saved' );
+  function handleCardClick() {
+    
+    routeLocation === '/movies'
+    ? handleSaveClick()
+    : handleDeleteClick()
+  }
 
   return (
     <li className='card'>
@@ -41,8 +69,8 @@ export default function MoviesCard({
           <p className='card__duration'>{parseDuration(duration)}</p>
         </div>
         <button
-          onClick={handleSaveClick}
-          className={`card__save-button ${ movie.isSaved ? deleteIcon : '' }` }
+          onClick={handleCardClick}
+          className={`card__save-button ${ deleteIconClass }` }
         />
       </div>
       <a
@@ -52,7 +80,7 @@ export default function MoviesCard({
       >
         <img
           alt={nameEN}
-          src={getImageUrl(image.url)}
+          src={movie.image.url || movie.image}
           className='card__photo'
         />
       </a>
