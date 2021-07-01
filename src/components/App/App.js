@@ -15,7 +15,6 @@ import * as utils from '../../utils/utils';
 import * as messages from '../../utils/messages';
 import mainApi from '../../utils/MainApi';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import { getContent } from '../../utils/auth';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
@@ -35,7 +34,8 @@ function App() {
     const token = localStorage.getItem('token');
 
     if (token) {
-      getContent(token)
+      mainApi
+        .getContent(token)
         .then(res => {
           if (res) {
             setCurrentUser({
