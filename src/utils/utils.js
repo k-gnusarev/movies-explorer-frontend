@@ -1,22 +1,3 @@
-export const errorMessageHandler = err => {
-  switch (err) {
-    case (err === 'Ошибка: 400' || err.message === 'Ошибка: 400'):
-      return 'Ошибка в запросе';
-    case (err === 'Ошибка: 401' || err.message === 'Ошибка: 401'):
-      return 'Неверный адрес email или пароль';
-    case (err === 'Ошибка: 403' || err.message === 'Ошибка: 402'):
-      return 'Вы не можете удалить чужую карточку';
-    case (err === 'Ошибка: 404' || err.message === 'Ошибка: 403'):
-      return 'Данные не найдены';
-    case (err === 'Ошибка: 409' || err.message === 'Ошибка: 409'):
-      return 'Пользователь с таким email уже зарегистрирован';
-    case (err === 'Ошибка: 429' || err.message === 'Ошибка: 429'):
-      return 'Слишком много запросов. Повторите позже';
-
-    default: return 'Что-то пошло не так...'
-  }
-}
-
 export const getToken = () => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -25,7 +6,7 @@ export const getToken = () => {
   return
 }
 
-export const getAbsoluteUrl = (link) => `https://api.nomoreparties.co${link}`
+export const getAbsoluteUrl = link => `https://api.nomoreparties.co${link}`
 
 export const getWindowWidth = () => window.innerWidth;
 
@@ -60,3 +41,21 @@ export const addMoreCards = () => {
 export const filterMoviesByName = (movieList, value) => movieList.filter(movie => movie.nameRU.toLowerCase().includes(value.toLowerCase()));
 
 export const filterShortMovies = (movieList, isChecked) => movieList.filter(movie => isChecked ? movie.duration <= 40 : Number)
+
+export const errorHandler = err => {
+  switch (err) {
+    case (400):
+      return 'Введены неверные данные'
+    case (401):
+      return 'Неверный адрес email или пароль'
+    case (403):
+      return 'Вы не можете удалить чужой фильм'
+    case (404):
+      return 'Запрошенный ресурс не найден'
+    case (409):
+      return 'Данный пользователь уже зарегистрирован'
+    case (429):
+      return 'От вас поступает слишком много запросов. Выпейте чаю и повторите попытку'
+    default: return 'Что-то пошло не так...'
+  }
+}

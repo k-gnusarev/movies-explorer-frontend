@@ -85,8 +85,18 @@
   margin-top: 220px;
 }
 
+.profile__button:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
 .profile__button_type_submit {
   color: #000;
+}
+
+.profile__button_type_submit:disabled {
+  opacity: .3;
+  cursor: default;
 }
 
 .profile__button_type_logout {

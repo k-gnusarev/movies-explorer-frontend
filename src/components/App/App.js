@@ -25,7 +25,10 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [searchError, setSearchError] = useState('')
+  const [searchError, setSearchError] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [registrationError, setRegistrationError] = useState('');
+  const [editError, setEditError] = useState('');
 
   const history = useHistory();
   const { pathname } = useLocation();
@@ -46,7 +49,7 @@ function App() {
             history.push(pathname);
           }
         })
-        .catch(err => console.error(err))
+        .catch(err => console.error(err.message))
     }
   }, [history])
 
@@ -60,7 +63,7 @@ function App() {
           setSavedMovies(res);
           localStorage.setItem('savedMovies', JSON.stringify(res));
         })
-        .catch(err => console.error(err))
+        .catch(err => console.error(err.message))
     }
   }, [isLoggedIn])
 
@@ -72,7 +75,7 @@ function App() {
           setCurrentUser(res)
         }
       })
-      .catch(err => console.error(err))
+      .catch(err => console.error(err.message))
   }
 
   function handleLogin(email, password) {
@@ -85,7 +88,7 @@ function App() {
         }
       })
       .catch(err => {
-        console.error(err)
+        console.error(err.message)
       })
   }
 
@@ -99,7 +102,7 @@ function App() {
         }
       })
       .catch((err) => {
-        console.error(err)
+        console.error(err.message)
       })
   }
 
@@ -128,7 +131,7 @@ function App() {
     //     setSavedMovies(res)
     //   })
     //   .catch(err => {
-    //     console.error(err);
+    //     console.error(err.message);
     //   })
 
   function getMovies() {
@@ -150,7 +153,7 @@ function App() {
       })
       .catch(err => {
         setSearchError(messages.ERROR_500)
-        console.error(err);
+        console.error(err.message);
       })
       .finally(() => {
         setIsPreloaderShown(false);
@@ -166,7 +169,7 @@ function App() {
         setSavedMovies(movies);
       })
       .catch(err => {
-        console.error(err);
+        console.error(err.message);
       })
   }
 
@@ -181,7 +184,7 @@ function App() {
         localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
       })
       .catch(err => {
-        console.error(err);
+        console.error(err.message);
       })
   }
 
@@ -250,15 +253,19 @@ function App() {
             onLogout={handleLogout}
             onProfileUpdate={handleProfileUpdate}
             isLoggedIn={isLoggedIn}
+            error={editError}
+            //setValues={setValues}
           ></ProtectedRoute>)}
           <Route path='/signin' exact>
             <Login
               onLogin={handleLogin}
+              error={loginError}
             />
           </Route>
           <Route path='/signup' exact>
             <Register
               onRegister={handleRegister}
+              error={registrationError}
             />
           </Route>
           <Route path='*'>

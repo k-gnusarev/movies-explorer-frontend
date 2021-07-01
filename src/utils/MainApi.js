@@ -1,5 +1,5 @@
 import { BASE_URL } from "./constants";
-import * as utils from './utils';
+import { errorHandler } from './utils'
 
 class MainApi {
   constructor({ baseUrl, headers }) {
@@ -92,7 +92,7 @@ class MainApi {
           return data.token;
         }
 
-        return Promise.reject(new Error(`Что-то пошло не так... Код ошибки: ${data.status}`))
+        return Promise.reject(new Error(data))
       })
   }
 
@@ -119,7 +119,7 @@ class MainApi {
       return res.json();
     }
 
-    return Promise.reject(new Error(`Что-то пошло не так... Код ошибки: ${res.status}`))
+    return Promise.reject(new Error(errorHandler(res.status)))
   }
 
   _updateHeaders() {
@@ -130,10 +130,6 @@ class MainApi {
       // попробуй разобраться с этим местом
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     }
-  }
-
-  handleError(err) {
-    console.error(err);
   }
 }
 

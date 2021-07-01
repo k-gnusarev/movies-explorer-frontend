@@ -3,11 +3,11 @@ import React from 'react';
 import './Register.css';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo-header.svg';
-import { validateForm } from '../../utils/formValidator';
+import { useFormWithValidation } from '../../utils/CallbackValidation';
 
 export default function Register({ onRegister }) {
   const isLoggedIn = false;
-  const { values, errors, isValid, handleChange } = validateForm();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
   
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -42,6 +42,7 @@ export default function Register({ onRegister }) {
             id='name'
             minLength='2'
             maxLength='30'
+            pattern='[а-яА-Яa-zA-ZёË\- ]{1,}'
             required={true}
             type='text'
             onChange={handleChange}

@@ -55,7 +55,6 @@ export default function MoviesCard({
   }
 
   function handleCardClick() {
-    
     routeLocation === '/movies'
     ? handleSaveClick()
     : handleDeleteClick()

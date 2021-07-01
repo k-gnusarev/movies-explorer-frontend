@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-import { validateForm } from '../../utils/formValidator';
+import { useFormWithValidation } from '../../utils/CallbackValidation';
 import Header from '../Header/Header';
 import './Profile.css';
 
@@ -11,7 +11,7 @@ export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
   const [isInputDisabled, setIsInputDisabled] = useState(true);
 
   const currentUser = useContext(CurrentUserContext);
-  const { values, errors, isValid, handleChange, setValues } = validateForm();
+  const { values, handleChange, errors, isValid, setValues } = useFormWithValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -20,7 +20,7 @@ export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
 
   useEffect(() => {
     setValues(currentUser)
-  }, [currentUser, setValues])
+  }, [currentUser])
 
   return (
     <>
@@ -44,14 +44,14 @@ export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
               required={true}
               value={values.name || ''}
               onChange={handleChange}
-              disabled={false}
+              pattern='[а-яА-Яa-zA-ZёË\- ]{1,}'
             ></input>
           </label>
           {errors.name && <span
               className='profile__error-label'
             >{errors.name}</span>}
           <label htmlFor='email' className='profile__form-label'>
-            Почта 
+            Email 
             <input
               type='email'
               className='profile__input'
@@ -60,7 +60,6 @@ export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
               required={true}
               value={values.email || ''}
               onChange={handleChange}
-              disabled={false}
             />
           </label>
           {errors.email && <span
@@ -69,6 +68,7 @@ export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
           <button
             className='profile__button profile__button_type_submit'
             type='submit'
+            disabled={!isValid}
           >
             Редактировать
           </button>

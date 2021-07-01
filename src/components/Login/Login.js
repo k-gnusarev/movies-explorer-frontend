@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo-header.svg';
-import { validateForm } from '../../utils/formValidator';
+import { useFormWithValidation } from '../../utils/CallbackValidation';
 
 export default function Login({ onLogin }) {
   const isLoggedIn = false;
-  const { values, errors, isValid, handleChange } = validateForm();
+  const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
