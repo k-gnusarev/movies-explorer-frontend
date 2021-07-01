@@ -2,13 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { useLocation } from 'react-router-dom';
 import * as utils from '../../utils/utils'
 
 export default function MoviesCardList({
   movies,
   checkSaved,
-  onSaveClick,
   searchError,
   addMovie,
   removeMovie,
@@ -52,7 +50,6 @@ export default function MoviesCardList({
               key={movie._id || movie.id}
               movie={movie}
               checkSaved={checkSaved}
-              onSaveClick={onSaveClick}
               addMovie={addMovie}
               removeMovie={removeMovie}
               savedMovies={savedMovies}

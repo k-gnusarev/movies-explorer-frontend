@@ -47,7 +47,7 @@ export const errorHandler = err => {
     case (400):
       return 'Введены неверные данные'
     case (401):
-      return 'Неверный адрес email или пароль'
+      return 'Неверный email или пароль'
     case (403):
       return 'Вы не можете удалить чужой фильм'
     case (404):

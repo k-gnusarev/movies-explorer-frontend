@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import { useFormWithValidation } from '../../utils/CallbackValidation';
 import Header from '../Header/Header';
@@ -7,9 +7,6 @@ import './Profile.css';
 
 
 export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
-  const [isSubmitButtonActive, setIsSubmitButtonActive] = useState(false);
-  const [isInputDisabled, setIsInputDisabled] = useState(true);
-
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, setValues } = useFormWithValidation();
 
@@ -70,7 +67,7 @@ export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
             type='submit'
             disabled={!isValid}
           >
-            Редактировать
+            Сохранить
           </button>
           <button
             className='profile__button profile__button_type_logout'

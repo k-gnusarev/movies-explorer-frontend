@@ -18,8 +18,6 @@ export default function SavedMovies({
   setRenderedMovies,
   checkSaved,
   inputMessage,
-  onSaveClick,
-  onSubmit,
   handleShortClick
 }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -59,7 +57,6 @@ export default function SavedMovies({
         setRenderedMovies={setRenderedMovies}
         checkSaved={checkSaved}
         inputMessage={inputMessage}
-        onSaveClick={onSaveClick}
       />
       <Footer />
     </>

@@ -33,7 +33,6 @@ class MainApi {
   // GET /movies
 
   getMovies() {
-
     return fetch(`${this._baseUrl}/movies`, {
       headers: this._headers,
     })
@@ -114,7 +113,6 @@ class MainApi {
   // получение ответа на запрос с сервера
 
   _getResponseData(res) {
-
     if (res.ok) {
       return res.json();
     }
@@ -125,9 +123,6 @@ class MainApi {
   _updateHeaders() {
     this._headers = {
       'Content-Type': 'application/json',
-      // могут возникнуть непонятки с Bearer,
-      // если возникнут проблемы с авторизацией
-      // попробуй разобраться с этим местом
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
     }
   }

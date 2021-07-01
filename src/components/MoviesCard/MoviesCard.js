@@ -1,20 +1,18 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import './MoviesCard.css';
-import { Route, useLocation } from 'react-router-dom';
-import * as utils from '../../utils/utils'
+import { useLocation } from 'react-router-dom';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 export default function MoviesCard({
   movie,
-  onSaveClick,
   addMovie,
   removeMovie,
   savedMovies
 }) {
   const [isSaved, setIsSaved] = useState(false);
 
-  const { nameEN, duration, image, trailerLink } = movie;
+  const { nameEN, duration, trailerLink } = movie;
   const routeLocation = useLocation().pathname;
 
   // определяем по маршруту, какую иконку прорисовывать

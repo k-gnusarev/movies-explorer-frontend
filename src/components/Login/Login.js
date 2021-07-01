@@ -6,7 +6,6 @@ import logo from '../../images/logo-header.svg';
 import { useFormWithValidation } from '../../utils/CallbackValidation';
 
 export default function Login({ onLogin }) {
-  const isLoggedIn = false;
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   function handleSubmit(evt) {
@@ -17,18 +16,15 @@ export default function Login({ onLogin }) {
   return (
     <section className='login'>
       <div className='login__container'>
-
-      { !isLoggedIn && (
-          <Link
-            className='login__link'
-            to='/'>
-              <img
-                className='login__logo'
-                src={logo}
-                alt='Перейти на главную страницу'
-              />
-          </Link>
-        ) }
+        <Link
+          className='login__link'
+          to='/'>
+            <img
+              className='login__logo'
+              src={logo}
+              alt='Перейти на главную страницу'
+            />
+        </Link>
         <h2 className='login__title'>Рады видеть!</h2>
         <form
           className='login__form'

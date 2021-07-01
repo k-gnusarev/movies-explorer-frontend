@@ -26,9 +26,6 @@ function App() {
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchError, setSearchError] = useState('');
-  const [loginError, setLoginError] = useState('');
-  const [registrationError, setRegistrationError] = useState('');
-  const [editError, setEditError] = useState('');
 
   const history = useHistory();
   const { pathname } = useLocation();
@@ -54,7 +51,7 @@ function App() {
   }, [history])
 
   useEffect(() => {
-     // ПРоверка состояния авторизации и получение фильмов с сервера
+     // Проверка состояния авторизации и получение фильмов с сервера
 
     if (isLoggedIn) {
       mainApi
@@ -121,19 +118,6 @@ function App() {
     return allMovies
   }
 
-
-
-
-    // mainApi
-    //   .getMovies()
-    //   .then(res => {
-    //     localStorage.setItem('savedMovies', JSON.stringify(res))
-    //     setSavedMovies(res)
-    //   })
-    //   .catch(err => {
-    //     console.error(err.message);
-    //   })
-
   function getMovies() {
     setInputMessage('');
     setIsPreloaderShown(true);
@@ -149,7 +133,7 @@ function App() {
         console.log(moviesWithAbsoluteUrl);
         localStorage.setItem('movies', JSON.stringify(moviesWithAbsoluteUrl));
         setMovies(checkSavedMovies(moviesWithAbsoluteUrl, savedMovies));
-        setSearchError(messages.NOT_FOUND); // будет выведено, если фильмов найдено не будет
+        setSearchError(messages.NOT_FOUND);
       })
       .catch(err => {
         setSearchError(messages.ERROR_500)
@@ -174,7 +158,6 @@ function App() {
   }
 
   function handleRemoveMovie(movie) {
-    console.log(movie);
     mainApi
       .deleteMovie(movie)
       .then(res => {
@@ -186,18 +169,6 @@ function App() {
       .catch(err => {
         console.error(err.message);
       })
-  }
-
-  function handleSaveClick(movie) {
-    // if(!movie.isSaved && !movie._id) {
-    //   console.log(movie.isSaved);
-    //   console.log(movie._id);
-    //   console.log(movie);
-    //   console.log('handleRemoveMovie(movie) / true')
-    // } else {
-    //   console.log('handleSaveMovie(movie) / false'); 
-    // }
-    !movie.isSaved && !movie.id ? handleSaveMovie(movie) : handleRemoveMovie(movie); 
   }
 
   useEffect(() => {
@@ -226,7 +197,6 @@ function App() {
             movies={movies}
             isPreloaderShown={isPreloaderShown}
             inputMessage={inputMessage}
-            onSaveClick={handleSaveClick}
             isLoggedIn={isLoggedIn}
             searchError={searchError}
             savedMovies={savedMovies}
@@ -245,7 +215,6 @@ function App() {
             movies={movies}
             isPreloaderShown={isPreloaderShown}
             inputMessage={inputMessage}
-            onSaveClick={handleSaveClick}
           ></ProtectedRoute>)}
           {isLoggedIn && (<ProtectedRoute
             path='/profile'
@@ -253,19 +222,15 @@ function App() {
             onLogout={handleLogout}
             onProfileUpdate={handleProfileUpdate}
             isLoggedIn={isLoggedIn}
-            error={editError}
-            //setValues={setValues}
           ></ProtectedRoute>)}
           <Route path='/signin' exact>
             <Login
               onLogin={handleLogin}
-              error={loginError}
             />
           </Route>
           <Route path='/signup' exact>
             <Register
               onRegister={handleRegister}
-              error={registrationError}
             />
           </Route>
           <Route path='*'>

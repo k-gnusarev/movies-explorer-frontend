@@ -6,7 +6,6 @@ import logo from '../../images/logo-header.svg';
 import { useFormWithValidation } from '../../utils/CallbackValidation';
 
 export default function Register({ onRegister }) {
-  const isLoggedIn = false;
   const { values, handleChange, errors, isValid } = useFormWithValidation();
   
   function handleSubmit(evt) {
@@ -17,18 +16,15 @@ export default function Register({ onRegister }) {
   return (
     <section className='register'>
       <div className='register__container'>
-        { !isLoggedIn && (
-          <Link
-            className='register__link'
-            to='/'>
-              <img
-                className='register__logo'
-                src={logo}
-                alt='Перейти на главную страницу'
-              />
-          </Link>
-        ) }
-        
+        <Link
+          className='register__link'
+          to='/'>
+            <img
+              className='register__logo'
+              src={logo}
+              alt='Перейти на главную страницу'
+            />
+        </Link>
         <h2 className='register__title'>Добро пожаловать!</h2>
         <form
           className='register__form'

@@ -9,12 +9,9 @@ import Footer from '../Footer/Footer';
 import * as utils from '../../utils/utils';
 
 export default function Movies({
-  checkSaved,
   onSearch,
   movies,
   isPreloaderShown,
-  inputMessage,
-  onSaveClick,
   isLoggedIn,
   searchError,
   addMovie,
@@ -59,9 +56,6 @@ export default function Movies({
         movies={allMovies}
         renderedMovies={renderedMovies}
         setRenderedMovies={setRenderedMovies}
-        checkSaved={checkSaved}
-        inputMessage={inputMessage}
-        onSaveClick={onSaveClick}
         searchError={searchError}
         addMovie={addMovie}
         removeMovie={removeMovie}

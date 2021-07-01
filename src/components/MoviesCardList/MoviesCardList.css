@@ -1,5 +1,3 @@
-/* TODO: устранить гориз. прокрутку на мобилке */
-
 .card-list {
   display: flex;
   flex-direction: column;
