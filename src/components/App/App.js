@@ -19,12 +19,18 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [searchOptions, setSearchOptions] = useState({
+    searchQuery: '',
+    isShort: false
+  });
   const [savedMovies, setSavedMovies] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [movies, setMovies] = useState([]);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchError, setSearchError] = useState('');
+  const [updateProfileMessage, setUpdateProfileMessage] = useState('');
+  const [updateErrorState, setUpdateErrorState] = useState(false);
 
   const history = useHistory();
   const { pathname } = useLocation();
@@ -51,6 +57,19 @@ function App() {
   }, [history])
 
   useEffect(() => {
+    // при загрузке страницы:
+    // извлекаем сохраненный поисковый запрос в стейт
+    const searchOptions = JSON.parse(localStorage.getItem('searchOptions'));
+
+    searchOptions ? setSearchOptions(searchOptions) : setSearchOptions({});
+  }, [])
+
+  useEffect(() => {
+    // записываем поисковый запрос в хранилище
+    localStorage.setItem('searchOptions', JSON.stringify(searchOptions))
+  }, [searchOptions])
+
+  useEffect(() => {
      // Проверка состояния авторизации и получение фильмов с сервера
 
     if (isLoggedIn) {
@@ -70,9 +89,18 @@ function App() {
       .then(res => {
         if (res) {
           setCurrentUser(res)
+          setUpdateProfileMessage(messages.UPDATE_SUCCESS);
+          setUpdateErrorState(false);
         }
       })
-      .catch(err => console.error(err.message))
+      .catch(err => {
+        setUpdateProfileMessage(err.message);
+        setUpdateErrorState(true);
+        console.error(err.message)
+      })
+      .finally(() => {
+        setTimeout(() => { setUpdateProfileMessage('') }, 5000)
+      })
   }
 
   function handleLogin(email, password) {
@@ -130,7 +158,7 @@ function App() {
           movie.image.url = imageUrl
           return movie
         })
-        console.log(moviesWithAbsoluteUrl);
+        
         localStorage.setItem('movies', JSON.stringify(moviesWithAbsoluteUrl));
         setMovies(checkSavedMovies(moviesWithAbsoluteUrl, savedMovies));
         setSearchError(messages.NOT_FOUND);
@@ -202,6 +230,8 @@ function App() {
             savedMovies={savedMovies}
             addMovie={handleSaveMovie}
             removeMovie={handleRemoveMovie}
+            searchOptions={searchOptions}
+            setSearchOptions={setSearchOptions}
           ></ProtectedRoute>)}
           {isLoggedIn && (<ProtectedRoute
             path='/saved-movies'
@@ -215,6 +245,8 @@ function App() {
             movies={movies}
             isPreloaderShown={isPreloaderShown}
             inputMessage={inputMessage}
+            searchOptions={searchOptions}
+            setSearchOptions={setSearchOptions}
           ></ProtectedRoute>)}
           {isLoggedIn && (<ProtectedRoute
             path='/profile'
@@ -222,6 +254,8 @@ function App() {
             onLogout={handleLogout}
             onProfileUpdate={handleProfileUpdate}
             isLoggedIn={isLoggedIn}
+            updateMessage={updateProfileMessage}
+            errorState={updateErrorState}
           ></ProtectedRoute>)}
           <Route path='/signin' exact>
             <Login

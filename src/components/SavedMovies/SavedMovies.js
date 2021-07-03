@@ -14,15 +14,22 @@ export default function SavedMovies({
   searchError,
   addMovie,
   removeMovie,
+  onSearch,
   renderedMovies,
   setRenderedMovies,
   checkSaved,
   inputMessage,
-  handleShortClick
+  searchOptions,
+  setSearchOptions
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [isShort, setIsShort] = useState(false);
   const [movies, setMovies] = useState(savedMovies);
+
+  function handleShortClick() {
+    setIsShort(!isShort)
+    setSearchOptions({ isShort: !isShort, searchQuery })
+  }
 
   useEffect(() => {
     const moviesFilteredByName = utils.filterMoviesByName(savedMovies, searchQuery);
@@ -31,13 +38,18 @@ export default function SavedMovies({
     setMovies(moviesList);
   }, [savedMovies, searchQuery, isShort])
 
-  function handleShortClick() {
-    setIsShort(!isShort)
-  }
-
   function handleSearchSubmit(query) {
     setSearchQuery(query);
+    if (!movies.length) {
+      onSearch();
+    }
+    setSearchOptions({ isShort: !isShort, searchQuery: query })
   }
+
+  useEffect(() => {
+    setSearchQuery(searchOptions.searchQuery);
+    setIsShort(searchOptions.isShort)
+  }, [])
 
   return (
     <>
@@ -45,7 +57,8 @@ export default function SavedMovies({
       <SearchForm
         onSubmit={handleSearchSubmit}
         isShort={isShort}
-        handleShortClick={handleShortClick}/>
+        handleShortClick={handleShortClick}
+        searchOptions={searchOptions}/>
       <Preloader />
       <MoviesCardList
         movies={movies}

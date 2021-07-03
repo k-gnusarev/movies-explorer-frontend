@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import search__icon from '../../images/search-icon.svg';
@@ -7,7 +7,8 @@ import search__icon from '../../images/search-icon.svg';
 export default function SearchForm({
   onSubmit,
   isShort,
-  handleShortClick
+  handleShortClick,
+  searchOptions
 }) {
   const [query, setQuery] = useState('');
   const [error, setError] = useState('')
@@ -45,6 +46,7 @@ export default function SearchForm({
       <FilterCheckbox
         isShort={isShort}
         onClick={handleShortClick}
+        searchOptions={searchOptions}
       />
     </section>
   )

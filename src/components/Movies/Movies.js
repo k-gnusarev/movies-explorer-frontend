@@ -16,7 +16,9 @@ export default function Movies({
   searchError,
   addMovie,
   removeMovie,
-  savedMovies
+  savedMovies,
+  searchOptions,
+  setSearchOptions
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [renderedMovies, setRenderedMovies] = useState([]);
@@ -25,6 +27,7 @@ export default function Movies({
 
   function handleShortClick() {
     setIsShort(!isShort)
+    setSearchOptions({ isShort: !isShort, searchQuery })
   }
 
   function handleSearchSubmit(query) {
@@ -32,14 +35,23 @@ export default function Movies({
     if (!movies.length) {
       onSearch();
     }
+    setSearchOptions({ isShort: !isShort, searchQuery: query })
   }
 
   useEffect(() => {
+    // фильтруем фильмы по поисковому запросу
     const moviesFilteredByName = utils.filterMoviesByName(movies, searchQuery);
     const moviesList = utils.filterShortMovies(moviesFilteredByName, isShort);
 
     setAllMovies(moviesList);
   }, [movies, searchQuery, isShort])
+
+  useEffect(() => {
+    console.log(searchOptions);
+    // отображаем результаты поиска после закрытия вкладки
+    setSearchQuery(searchOptions.searchQuery);
+    setIsShort(searchOptions.isShort)
+  }, [])
 
   return (
     <>
@@ -48,6 +60,7 @@ export default function Movies({
         onSubmit={handleSearchSubmit}
         isShort={isShort}
         handleShortClick={handleShortClick}
+        searchOptions={searchOptions}
       />
       <Preloader
         isPreloaderShown={isPreloaderShown}

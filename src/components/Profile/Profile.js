@@ -1,18 +1,31 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import { useFormWithValidation } from '../../utils/CallbackValidation';
 import Header from '../Header/Header';
 import './Profile.css';
 
 
-export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
+export default function Profile({
+  onLogout,
+  onProfileUpdate,
+  isLoggedIn,
+  updateMessage,
+  errorState
+}) {
+  const [isUpdateButtonDisabled, setIsUpdateButtonDisabled] = useState(false);
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, setValues } = useFormWithValidation();
 
   function handleSubmit(evt) {
     evt.preventDefault();
     onProfileUpdate(values.email, values.name)
+    setIsUpdateButtonDisabled(true)
+  }
+
+  function handleValueChange(event) {
+    setIsUpdateButtonDisabled(false)
+    handleChange(event);
   }
 
   useEffect(() => {
@@ -40,7 +53,7 @@ export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
               name='name'
               required={true}
               value={values.name || ''}
-              onChange={handleChange}
+              onChange={handleValueChange}
               pattern='[а-яА-Яa-zA-ZёË\- ]{1,}'
             ></input>
           </label>
@@ -56,16 +69,19 @@ export default function Profile({ onLogout, onProfileUpdate, isLoggedIn }) {
               name='email'
               required={true}
               value={values.email || ''}
-              onChange={handleChange}
+              onChange={handleValueChange}
             />
           </label>
           {errors.email && <span
               className='profile__error-label'
             >{errors.email}</span>}
+            <span
+              className={`profile__tooltip ${errorState ? 'profile__tooltip_error' : ''} ${updateMessage ? '' : 'no-display'}`}
+            >{updateMessage}</span>
           <button
             className='profile__button profile__button_type_submit'
             type='submit'
-            disabled={!isValid}
+            disabled={!isValid || isUpdateButtonDisabled}
           >
             Сохранить
           </button>
