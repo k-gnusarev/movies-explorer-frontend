@@ -1,9 +1,8 @@
 import React from 'react';
 import './NotFound.css';
-import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
-export default function NotFound(props) {
+export default function NotFound() {
   const history = useHistory(); 
   
   return (

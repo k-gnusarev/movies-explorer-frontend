@@ -1,7 +1,7 @@
 import React from 'react';
 import './Portfolio.css';
 
-export default function Portfolio(props) {
+export default function Portfolio() {
   return (
     <section className='portfolio'>
       <h4 className='portfolio__title'>Портфолио</h4>

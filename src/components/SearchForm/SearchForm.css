@@ -48,6 +48,13 @@
   opacity: .7;
 }
 
+.search__error-label {
+  font-size: 10px;
+  line-height: 12px;
+  color: #ff4062;
+  padding-bottom: 20px;
+}
+
 .search__button {
   color: #fff;
   background: #000;

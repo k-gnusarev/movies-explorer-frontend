@@ -1,25 +1,86 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react';
 import './MoviesCard.css';
-import movie__preview from '../../images/movie-preview.jpg';
 import { useLocation } from 'react-router-dom';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-export default function MoviesCard(props) {
+export default function MoviesCard({
+  movie,
+  addMovie,
+  removeMovie,
+  savedMovies
+}) {
+  const [isSaved, setIsSaved] = useState(false);
+
+  const { nameEN, duration, trailerLink } = movie;
   const routeLocation = useLocation().pathname;
-  const [isSaved, setIsSaved] = React.useState(true);
 
   // определяем по маршруту, какую иконку прорисовывать
-  const deleteIcon = ( routeLocation === '/saved-movies' ? 'card__save-button_delete' : 'card__save-button_saved' );
+  const savedIconClass = isSaved ? 'card__save-button_saved' : '' ;
+  const deleteIconClass = ( routeLocation === '/movies' ? savedIconClass : 'card__save-button_delete' );
+
+  useEffect(() => {
+    if(savedMovies.length > 0) {
+      !isSaved
+      ? setIsSaved(savedMovies.some(savedMovie => savedMovie.movieId === movie._id && savedMovie.owner === CurrentUserContext._id))
+      : setIsSaved(false)
+    }
+  }, [])
+
+  const parseDuration = duration => {
+    const hours = Math.floor(duration / 60)
+    const minutes = duration % 60;
+
+    return `${hours > 0 ? hours + 'ч ': ''}${minutes}м`
+  }
+
+  function handleSaveClick() {
+    if (!isSaved) {
+      addMovie(movie);
+      setIsSaved(true);
+    } else {
+
+      const card = savedMovies.filter(savedMovie => savedMovie.movieId === movie.id);
+
+      removeMovie(card[0]._id)
+      setIsSaved(false)
+    }
+  }
+
+  function handleDeleteClick() {
+    removeMovie(movie._id)
+    setIsSaved(false)
+  }
+
+  function handleCardClick() {
+    routeLocation === '/movies'
+    ? handleSaveClick()
+    : handleDeleteClick()
+  }
 
   return (
-    <div className='card'>
+    <li className='card'>
       <div className='card__title-section'>
         <div className='card__text-section'>
-          <h2 className='card__title'>33 слова о дизайне</h2>
-          <p className='card__duration'>1ч 47м</p>
+          <h2 className='card__title'>{nameEN}</h2>
+          <p className='card__duration'>{parseDuration(duration)}</p>
         </div>
-        <button onClick={() => setIsSaved(!isSaved)} className={`card__save-button ${ isSaved ? deleteIcon : '' }` } />
+        <button
+          onClick={handleCardClick}
+          className={`card__save-button ${ deleteIconClass }` }
+        />
       </div>
-      <img alt='Постер к карточке' src={movie__preview} className='card__photo' />
-    </div>
+      <a
+        href={trailerLink}
+        target='_blank'
+        rel='noreferrer'
+      >
+        <img
+          alt={nameEN}
+          src={movie.image.url || movie.image}
+          className='card__photo'
+        />
+      </a>
+    </li>
   )
 };
